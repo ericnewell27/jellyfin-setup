@@ -1,6 +1,3 @@
-# jellyfin-setup
-Self-hosted media server using Docker
-
 # Homelab Media Server & Automation Stack
 
 A containerized, self-hosted media server and automation infrastructure running on Proxmox, featuring integrated content discovery, monitoring, and security hardening through VPN encryption.
@@ -19,6 +16,7 @@ Built to understand enterprise infrastructure patterns applied to a personal lab
 ---
 
 ## 🏗️ Architecture Overview
+
 ┌─────────────────────────────────────┐
 │      Mini PC with Proxmox Host      │
 │           (2TB Storage)             │
@@ -39,12 +37,13 @@ Built to understand enterprise infrastructure patterns applied to a personal lab
 │  │  • VPN Client (All Traffic)     ││
 │  └─────────────────────────────────┘│
 └─────────────────────────────────────┘
-│
-↓
-[ VPN Tunnel ]
-│
-↓
-External Access
+       │
+       ↓
+  [ VPN Tunnel ]
+       │
+       ↓
+ External Access
+
 ---
 
 ## 📦 Services & Components
@@ -68,12 +67,10 @@ External Access
 
 ## 🖥️ Hardware Specifications
 
-| Component | Spec |
-|-----------|------|
-| **Device** | Mini PC |
-| **Storage** | 2TB (upgraded) |
-| **Hypervisor** | Proxmox |
-| **Containerization** | Docker |
+Device | Mini PC
+Storage | 2TB (upgraded)
+Hypervisor | Proxmox
+Containerization | Docker
 
 ---
 
@@ -86,13 +83,15 @@ External Access
 4. **Distributed Services** — Separate concerns (media, automation, monitoring, delivery)
 
 ### Network Flow
+
 User Request → Jellyseerr (UI) → Radarr/Sonarr (Automation) → qBittorrent (Download)
-↓
-[ VPN Tunnel ]
-↓
-[ Indexers / Content Sources ]
+                    ↓
+            [ VPN Tunnel ]
+                    ↓
+            [ Indexers / Content Sources ]
 
 Monitoring: Beszel → System Health → Alerts & Logging
+
 ---
 
 ## 📋 Setup & Deployment
@@ -115,61 +114,66 @@ Monitoring: Beszel → System Health → Alerts & Logging
    - Verify leak protection (DNS, IPv4/IPv6)
 
 3. **Service Deployment**
-   ```bash
    docker-compose up -d
-   4. Service Configuration  • Jellyfin: Add media libraries and user profiles
-  • Radarr/Sonarr: Configure indexers (via Prowlarr), quality profiles, download paths
-  • Jellyseerr: Link to Radarr/Sonarr, enable notifications
-  • qBittorrent: Set download paths, connection limits, ratio enforcement
 
-5. Monitoring Setup  • Beszel: Configure agents on media node(s)
-  • Set up logging and alert thresholds
+4. **Service Configuration**
+   - Jellyfin: Add media libraries and user profiles
+   - Radarr/Sonarr: Configure indexers (via Prowlarr), quality profiles, download paths
+   - Jellyseerr: Link to Radarr/Sonarr, enable notifications
+   - qBittorrent: Set download paths, connection limits, ratio enforcement
 
+5. **Monitoring Setup**
+   - Beszel: Configure agents on media node(s)
+   - Set up logging and alert thresholds
 
-🔐 Security & Privacy Considerations
+---
 
-✅ Implemented:
+## 🔐 Security & Privacy Considerations
 
-• VPN encryption for all external traffic
-• Container isolation via Proxmox
-• No exposed ports (internal access via VPN)
-• Service-to-service authentication where applicable
-⚠️ Best Practices Applied:
+✅ **Implemented:**
+- VPN encryption for all external traffic
+- Container isolation via Proxmox
+- No exposed ports (internal access via VPN)
+- Service-to-service authentication where applicable
 
-• Regular updates for all containers and base images
-• Least-privilege user accounts within containers
-• Firewall rules for internal communication only
-• Monitoring for suspicious activity (Beszel logs)
+⚠️ **Best Practices Applied:**
+- Regular updates for all containers and base images
+- Least-privilege user accounts within containers
+- Firewall rules for internal communication only
+- Monitoring for suspicious activity (Beszel logs)
 
-📊 Performance & Monitoring
+---
 
-Beszel Integration:
+## 📊 Performance & Monitoring
 
-• Real-time CPU, RAM, disk I/O monitoring
-• Container health checks
-• Alerting for service failures
-• Historical performance trending
-Optimization Strategies:
+**Beszel Integration:**
+- Real-time CPU, RAM, disk I/O monitoring
+- Container health checks
+- Alerting for service failures
+- Historical performance trending
 
-• Proxmox resource limits to prevent resource starvation
-• Container CPU/memory caps for stable performance
-• Disk I/O tuning for media library scanning
+**Optimization Strategies:**
+- Proxmox resource limits to prevent resource starvation
+- Container CPU/memory caps for stable performance
+- Disk I/O tuning for media library scanning
 
-💡 Key Learnings & Skills Demonstrated
+---
 
-✅ Virtualization — Proxmox hypervisor management, VM lifecycle
-✅ Containerization — Docker orchestration, service dependencies, networking
-✅ Automation — *arr stack workflows, intelligent content procurement
-✅ Observability — Monitoring, logging, alerting, system health
-✅ Security — VPN integration, encryption, network isolation
-✅ Infrastructure as Code — Docker Compose for reproducible deployments
-✅ Troubleshooting — Log analysis, service debugging, performance optimization
+## 💡 Key Learnings & Skills Demonstrated
 
+✅ **Virtualization** — Proxmox hypervisor management, VM lifecycle
+✅ **Containerization** — Docker orchestration, service dependencies, networking
+✅ **Automation** — *arr stack workflows, intelligent content procurement
+✅ **Observability** — Monitoring, logging, alerting, system health
+✅ **Security** — VPN integration, encryption, network isolation
+✅ **Infrastructure as Code** — Docker Compose for reproducible deployments
+✅ **Troubleshooting** — Log analysis, service debugging, performance optimization
 
-🔄 Operational Workflows
+---
 
-Adding New Media
+## 🔄 Operational Workflows
 
+### Adding New Media
 1. User requests via Jellyseerr
 2. Radarr/Sonarr detects request
 3. Prowlarr finds indexers
@@ -177,35 +181,42 @@ Adding New Media
 5. Sonarr/Radarr organizes library
 6. Jellyfin automatically indexes new content
 7. Beszel logs activity and performance
-System Maintenance
 
-• Weekly: Review Beszel logs for errors/warnings
-• Monthly: Update container images
-• As-needed: Adjust Radarr/Sonarr quality profiles based on content availability
+### System Maintenance
+- Weekly: Review Beszel logs for errors/warnings
+- Monthly: Update container images
+- As-needed: Adjust Radarr/Sonarr quality profiles based on content availability
 
-📈 Future Enhancements
+---
 
-• [ ] High availability setup (multi-node failover)
-• [ ] Advanced monitoring dashboards (Grafana integration)
-• [ ] Automated backup/disaster recovery strategy
-• [ ] API integrations for additional indexers
-• [ ] Performance tuning for 4K transcoding
-• [ ] User authentication and permission layers
+## 📈 Future Enhancements
 
-📚 Resources & References
+- [ ] High availability setup (multi-node failover)
+- [ ] Advanced monitoring dashboards (Grafana integration)
+- [ ] Automated backup/disaster recovery strategy
+- [ ] API integrations for additional indexers
+- [ ] Performance tuning for 4K transcoding
+- [ ] User authentication and permission layers
 
-• Jellyfin Documentation
-• Proxmox Documentation
-• Radarr/Sonarr Wiki
-• Prowlarr Setup Guide
-• Beszel Documentation
-• Docker Compose Reference
-• Setup Guide Reference
+---
 
-📝 License
+## 📚 Resources & References
+
+- Jellyfin Documentation: https://docs.jellyfin.org/
+- Proxmox Documentation: https://pve.proxmox.com/wiki/Main_Page
+- Radarr/Sonarr Wiki: https://wiki.servarr.com/
+- Prowlarr Setup Guide: https://wiki.servarr.com/prowlarr
+- Beszel Documentation: https://beszel.dev/
+- Docker Compose Reference: https://docs.docker.com/compose/
+- Setup Guide Reference: https://www.youtube.com/watch?v=twJDyoj0tDc&t=1455s
+
+---
+
+## 📝 License
 
 This project is provided as-is for educational and personal use.
 
+---
 
 Built by: Eric Newell
 Last Updated: February 2026
