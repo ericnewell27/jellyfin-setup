@@ -17,32 +17,22 @@ Built to understand enterprise infrastructure patterns applied to a personal lab
 
 ## 🏗️ Architecture Overview
 
-┌─────────────────────────────────────┐
-│      Mini PC with Proxmox Host      │
-│           (2TB Storage)              │
-├─────────────────────────────────────┤
-│         Docker Containers           │
-│  ┌─────────────────────────────────┐│
-│  │  Media Stack:                   ││
-│  │  • Jellyfin (Media Server)      ││
-│  │  • Jellyseerr (Request UI)      ││
-│  │  • Radarr (Movie Automation)    ││
-│  │  • Sonarr (TV Show Automation)  ││
-│  │  • Prowlarr (Indexer Hub)       ││
-│  │  • qBittorrent (Download Mgmt)  ││
-│  │                                  ││
-│  │  Infrastructure:                ││
-│  │  • Beszel (Monitoring/Logs)     ││
-│  │  • Media Node (Content Delivery)││
-│  │  • VPN Client (All Traffic)     ││
-│  └─────────────────────────────────┘│
-└─────────────────────────────────────┘
-       │
-       ↓
-  [ VPN Tunnel ]
-       │
-       ↓
- External Access
+Mini PC (Proxmox Host - 2TB Storage)
+└── Docker Containers
+    ├── Media Stack
+    │   ├── Jellyfin (Media Server)
+    │   ├── Jellyseerr (Request UI)
+    │   ├── Radarr (Movie Automation)
+    │   ├── Sonarr (TV Show Automation)
+    │   ├── Prowlarr (Indexer Hub)
+    │   └── qBittorrent (Download Client)
+    │
+    ├── Infrastructure
+    │   ├── Beszel (Monitoring/Logs)
+    │   ├── Media Node (Content Delivery)
+    │   └── VPN Client (All Traffic Encrypted)
+    │
+    └── [VPN Tunnel] → External Access
 
 ---
 
