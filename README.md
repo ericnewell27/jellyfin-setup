@@ -19,7 +19,7 @@ Built to understand enterprise infrastructure patterns applied to a personal lab
 
 ┌─────────────────────────────────────┐
 │      Mini PC with Proxmox Host      │
-│           (2TB Storage)             │
+│           (2TB Storage)              │
 ├─────────────────────────────────────┤
 │         Docker Containers           │
 │  ┌─────────────────────────────────┐│
@@ -30,7 +30,7 @@ Built to understand enterprise infrastructure patterns applied to a personal lab
 │  │  • Sonarr (TV Show Automation)  ││
 │  │  • Prowlarr (Indexer Hub)       ││
 │  │  • qBittorrent (Download Mgmt)  ││
-│  │                                 ││
+│  │                                  ││
 │  │  Infrastructure:                ││
 │  │  • Beszel (Monitoring/Logs)     ││
 │  │  • Media Node (Content Delivery)││
